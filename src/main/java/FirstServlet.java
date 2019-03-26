@@ -7,8 +7,7 @@ public class FirstServlet extends javax.servlet.http.HttpServlet {
     protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String data = request.getParameter("data");
-        DBAction dbAction = new DBAction();
-        dbAction.addToDB(data);
+        new DBAction().addToDB(data);
 
         PrintWriter out = response.getWriter();
         response.setContentType("text/html");

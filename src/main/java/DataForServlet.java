@@ -34,7 +34,6 @@ public class DataForServlet {
         return dfs.skill;
     }
 
-
     public String getUsed() {
         return dfs.used;
     }

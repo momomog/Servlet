@@ -5,7 +5,7 @@ public class DBAction {
     private String password = "1234";
     private String url = "jdbc:postgresql://localhost:5432/data";
 
-    public void addToDB(String data) throws ClassNotFoundException {
+    public void addToDB(String data)  {
         try (Connection connection = DriverManager.getConnection(url, login, password)) {
             Class.forName("org.postgresql.Driver");
             DataForServlet dfs = new DataForServlet();
@@ -19,6 +19,8 @@ public class DBAction {
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
