@@ -1,30 +1,46 @@
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
+import java.io.StringReader;
+
 public class DataForServlet {
-    String fname = null;
-    String lname = null;
-    String email = null;
 
-    public DataForServlet(String fname, String lname, String email) {
-        this.fname = fname;
-        this.lname = lname;
-        this.email = email;
+    private String name;
+    private String technology;
+    private String skill;
+    private String used;
+    private String commentary;
+    private DataForServlet dfs;
+
+    public void dataInitilization(String data) {
+        StringReader reader = new StringReader(data);
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            dfs = mapper.readValue(reader, DataForServlet.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public String getFname() {
-        return fname;
+    public String getName() {
+        return dfs.name;
     }
-    public void setFname(String fname) {
-        this.fname = fname;
+
+    public String getTechnology() {
+        return dfs.technology;
     }
-    public String getLname() {
-        return lname;
+
+    public String getSkill() {
+        return dfs.skill;
     }
-    public void setLname(String lname) {
-        this.lname = lname;
+
+
+    public String getUsed() {
+        return dfs.used;
     }
-    public String getEmail() {
-        return email;
+
+    public String getCommentary() {
+        return dfs.commentary;
     }
-    public void setEmail(String email) {
-        this.email = email;
-    }
+
 }
