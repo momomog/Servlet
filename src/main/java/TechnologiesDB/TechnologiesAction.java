@@ -1,4 +1,4 @@
-package UsersDB;
+package TechnologiesDB;
 
 import JsonParser.DataForServlet;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -8,8 +8,8 @@ import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
-@SuppressWarnings("all")
-public class UsersAction {
+//@SuppressWarnings("all")
+public class TechnologiesAction {
     private String login = "postgres";
     private String password = "1234";
     private String url = "jdbc:postgresql://localhost:5432/data";
@@ -32,16 +32,15 @@ public class UsersAction {
         }
     }
 
-    public String usersUpdate(String data) throws JsonProcessingException, NullPointerException {
+    public String technologiesUpdate(String data) throws JsonProcessingException, NullPointerException {
         try {
             dfs.dataInitilization(data);
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from users");
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from technologies");
             ResultSet resultSet = preparedStatement.executeQuery();
-            sb.append("{\"users\":[");
+            sb.append("{\"technologies\":[");
             while (resultSet.next()) {
                 map.put("id", String.valueOf(resultSet.getInt("id")));
                 map.put("name", resultSet.getString("name"));
-                map.put("email", resultSet.getString("email"));
                 sb.append(mapper.writeValueAsString(map)).append(",");
                 map.clear();
             }
@@ -51,36 +50,35 @@ public class UsersAction {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        if (sb.toString().contains("id")) {
+        if (sb.toString().contains("name")) {
             return sb.toString();
         } else {
             return "{\"success\": true,\"message\": \"Данные обновлены!\"}";
         }
     }
 
-    public String addUserToDB(String data) {
+    public String addTechnologyToDB(String data) {
         try {
             dfs.dataInitilization(data);
-            PreparedStatement preparedStatement = connection.prepareStatement("select email from users");
+            PreparedStatement preparedStatement = connection.prepareStatement("select name from technologies");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                String emailFromDB = resultSet.getString("email");
-                if (dfs.getEmail().equals(emailFromDB)) {
-                    return "{\"success\": false,\"message\": \"Пользователь с данной почтой уже зарегестрирован!\"}";
+                String technologyFromDB = resultSet.getString("name");
+                if (dfs.getTechnology().equals(technologyFromDB)) {
+                    return "{\"success\": false,\"message\": \"Данная технология уже зарегестрирована!\"}";
                 }
             }
-            preparedStatement = connection.prepareStatement("insert into users (name, email) VALUES (?,?)");
-            preparedStatement.setString(1, dfs.getName());
-            preparedStatement.setString(2, dfs.getEmail());
+            preparedStatement = connection.prepareStatement("insert into technologies (name) VALUES (?)");
+            preparedStatement.setString(1, dfs.getTechnology());
             preparedStatement.executeUpdate();
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return "{\"success\": true,\"message\": \"Пользователь добавлен!\"}";
+        return "{\"success\": true,\"message\": \"Технология добавлена!\"}";
     }
 
-    public String deleteUserFromDB(String data) {
+    public String deleteTechnologyFromDB(String data) {
         try {
             dfs.dataInitilization(data);
             PreparedStatement preparedStatement = connection.prepareStatement("delete from users * where id = ?");
@@ -90,6 +88,6 @@ public class UsersAction {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return "{\"success\": true,\"message\": \"Пользователь удален!\"}";
+        return "{\"success\": true,\"message\": \"Технология удалена!\"}";
     }
 }
