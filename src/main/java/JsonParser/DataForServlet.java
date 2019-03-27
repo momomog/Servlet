@@ -1,3 +1,5 @@
+package JsonParser;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
@@ -5,7 +7,11 @@ import java.io.StringReader;
 
 public class DataForServlet {
 
+    private String dataBase;
+    private String operation;
+    private String id;
     private String name;
+    private String email;
     private String technology;
     private String skill;
     private String used;
@@ -22,8 +28,24 @@ public class DataForServlet {
         }
     }
 
+    public String getDataBase() {
+        return dfs.dataBase;
+    }
+
+    public String getOperation() {
+        return dfs.operation;
+    }
+
+    public int getId() {
+        return Integer.parseInt(dfs.id);
+    }
+
     public String getName() {
         return dfs.name;
+    }
+
+    public String getEmail() {
+        return dfs.email;
     }
 
     public String getTechnology() {
