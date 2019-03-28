@@ -19,8 +19,10 @@ public class OperationDefiner {
                     return new UsersAction().usersUpdate(data);
                 } else if (dataForServlet.getOperation().equals("addNewUser")) {
                     return new UsersAction().addUserToDB(data);
-                } else {
+                } else if (dataForServlet.getOperation().equals("deleteUser")){
                     return new UsersAction().deleteUserFromDB(data);
+                } else {
+                    return new UsersAction().updateUserdataToDB(data);
                 }
             }
             case "technologies": {

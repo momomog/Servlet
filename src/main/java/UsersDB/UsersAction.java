@@ -35,7 +35,7 @@ public class UsersAction {
     public String usersUpdate(String data) throws NullPointerException {
         try {
             dfs.dataInitilization(data);
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from users");
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from users ORDER BY id");
             ResultSet resultSet = preparedStatement.executeQuery();
             sb.append("{\"users\":[");
             while (resultSet.next()) {
@@ -92,4 +92,20 @@ public class UsersAction {
         }
         return "{\"success\": true,\"message\": \"Пользователь удален!\"}";
     }
+
+    public String updateUserdataToDB(String data) {
+        try {
+            dfs.dataInitilization(data);
+            PreparedStatement preparedStatement = connection.prepareStatement("update users set name = ?, email = ? where id = ?");
+            preparedStatement.setString(1, dfs.getName());
+            preparedStatement.setString(2, dfs.getEmail());
+            preparedStatement.setInt(3, (Integer)dfs.getId());
+            preparedStatement.executeUpdate();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "{\"success\": true,\"message\": \"Пользователь добавлен!\"}";
+    }
+
 }
