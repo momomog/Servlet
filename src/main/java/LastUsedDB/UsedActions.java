@@ -90,4 +90,18 @@ public class UsedActions {
         }
         return "{\"success\": true,\"message\": \"Интервал удален!\"}";
     }
+
+    public String updateUseddataToDB(String data) {
+        try {
+            dfs.dataInitilization(data);
+            PreparedStatement preparedStatement = connection.prepareStatement("update useds set name = ? where id = ?");
+            preparedStatement.setString(1, dfs.getName());
+            preparedStatement.setInt(1, dfs.getId());
+            preparedStatement.executeUpdate();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "{\"success\": true,\"message\": \"Данные изменены!\"}";
+    }
 }

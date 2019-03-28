@@ -99,13 +99,12 @@ public class UsersAction {
             PreparedStatement preparedStatement = connection.prepareStatement("update users set name = ?, email = ? where id = ?");
             preparedStatement.setString(1, dfs.getName());
             preparedStatement.setString(2, dfs.getEmail());
-            preparedStatement.setInt(3, (Integer)dfs.getId());
+            preparedStatement.setInt(3, dfs.getId());
             preparedStatement.executeUpdate();
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return "{\"success\": true,\"message\": \"Пользователь добавлен!\"}";
+        return "{\"success\": true,\"message\": \"Данные изменены!\"}";
     }
-
 }

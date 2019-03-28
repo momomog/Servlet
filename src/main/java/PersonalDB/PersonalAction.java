@@ -99,4 +99,21 @@ public class PersonalAction {
         }
         return "{\"success\": true,\"message\": \"Пользователь удален!\"}";
     }
+
+    public String updatePersonaldataToDB(String data) {
+        try {
+            dfs.dataInitilization(data);
+            PreparedStatement preparedStatement = connection.prepareStatement("update personals set technology = ?, skill = ?, used = ?, commentary = ? where id = ?");
+            preparedStatement.setString(1, dfs.getTechnology());
+            preparedStatement.setString(2, dfs.getSkill());
+            preparedStatement.setString(3, dfs.getUsed());
+            preparedStatement.setString(4, dfs.getCommentary());
+            preparedStatement.setInt(5, dfs.getId());
+            preparedStatement.executeUpdate();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "{\"success\": true,\"message\": \"Данные изменены!\"}";
+    }
 }

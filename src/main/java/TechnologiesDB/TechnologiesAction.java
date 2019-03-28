@@ -90,4 +90,18 @@ public class TechnologiesAction {
         }
         return "{\"success\": true,\"message\": \"Технология удалена!\"}";
     }
+
+    public String updateTechnologydataToDB(String data) {
+        try {
+            dfs.dataInitilization(data);
+            PreparedStatement preparedStatement = connection.prepareStatement("update technologies set name = ? where id = ?");
+            preparedStatement.setString(1, dfs.getName());
+            preparedStatement.setInt(1, dfs.getId());
+            preparedStatement.executeUpdate();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "{\"success\": true,\"message\": \"Данные изменены!\"}";
+    }
 }

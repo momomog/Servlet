@@ -90,4 +90,18 @@ public class SkillsAction {
         }
         return "{\"success\": true,\"message\": \"Навык удален!\"}";
     }
+
+    public String updateSkilldataToDB(String data) {
+        try {
+            dfs.dataInitilization(data);
+            PreparedStatement preparedStatement = connection.prepareStatement("update skills set name = ? where id = ?");
+            preparedStatement.setString(1, dfs.getName());
+            preparedStatement.setInt(1, dfs.getId());
+            preparedStatement.executeUpdate();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "{\"success\": true,\"message\": \"Данные изменены!\"}";
+    }
 }

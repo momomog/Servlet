@@ -19,7 +19,7 @@ public class OperationDefiner {
                     return new UsersAction().usersUpdate(data);
                 } else if (dataForServlet.getOperation().equals("addNewUser")) {
                     return new UsersAction().addUserToDB(data);
-                } else if (dataForServlet.getOperation().equals("deleteUser")){
+                } else if (dataForServlet.getOperation().equals("deleteUser")) {
                     return new UsersAction().deleteUserFromDB(data);
                 } else {
                     return new UsersAction().updateUserdataToDB(data);
@@ -30,8 +30,10 @@ public class OperationDefiner {
                     return new TechnologiesAction().technologiesUpdate(data);
                 } else if (dataForServlet.getOperation().equals("addTechnologyToDB")) {
                     return new TechnologiesAction().addTechnologyToDB(data);
-                } else {
+                } else if (dataForServlet.getOperation().equals("deleteTechnologyFromDB")) {
                     return new TechnologiesAction().deleteTechnologyFromDB(data);
+                } else {
+                    return new TechnologiesAction().updateTechnologydataToDB(data);
                 }
             }
             case "skills": {
@@ -39,8 +41,10 @@ public class OperationDefiner {
                     return new SkillsAction().skillsUpdate(data);
                 } else if (dataForServlet.getOperation().equals("addSkillToDB")) {
                     return new SkillsAction().addSkillToDB(data);
-                } else {
+                } else if (dataForServlet.getOperation().equals("deleteSkillFromDB")) {
                     return new SkillsAction().deleteSkillFromDB(data);
+                } else {
+                    return new SkillsAction().updateSkilldataToDB(data);
                 }
             }
             case "useds": {
@@ -48,8 +52,10 @@ public class OperationDefiner {
                     return new UsedActions().usedsUpdate(data);
                 } else if (dataForServlet.getOperation().equals("addUsedToDB")) {
                     return new UsedActions().addUsedToDB(data);
-                } else {
+                } else if (dataForServlet.getOperation().equals("deleteUsedFromDB")) {
                     return new UsedActions().deleteUsedFromDB(data);
+                } else {
+                    return new UsedActions().updateUseddataToDB(data);
                 }
             }
             case "personals": {
@@ -57,8 +63,10 @@ public class OperationDefiner {
                     return new PersonalAction().personalsUpdate(data);
                 } else if (dataForServlet.getOperation().equals("addPersonalToDB")) {
                     return new PersonalAction().addPersonalToDB(data);
-                } else {
+                } else if (dataForServlet.getOperation().equals("deletePersonal")) {
                     return new PersonalAction().deletePersonalFromDB(data);
+                } else {
+                    return new PersonalAction().updatePersonaldataToDB(data);
                 }
             }
         }
