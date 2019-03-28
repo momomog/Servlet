@@ -1,4 +1,4 @@
-package UsersDB;
+package SkillsDB;
 
 import JsonParser.DataForServlet;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @SuppressWarnings("all")
-public class UsersAction {
+public class SkillsAction {
     private String login = "postgres";
     private String password = "1234";
     private String url = "jdbc:postgresql://localhost:5432/data";
@@ -32,16 +32,15 @@ public class UsersAction {
         }
     }
 
-    public String usersUpdate(String data) throws NullPointerException {
+    public String skillsUpdate(String data) throws NullPointerException {
         try {
             dfs.dataInitilization(data);
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from users");
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from skills");
             ResultSet resultSet = preparedStatement.executeQuery();
-            sb.append("{\"users\":[");
+            sb.append("{\"skills\":[");
             while (resultSet.next()) {
                 map.put("id", String.valueOf(resultSet.getInt("id")));
                 map.put("name", resultSet.getString("name"));
-                map.put("email", resultSet.getString("email"));
                 sb.append(mapper.writeValueAsString(map)).append(",");
                 map.clear();
             }
@@ -51,45 +50,44 @@ public class UsersAction {
         } catch (SQLException | JsonProcessingException e) {
             e.printStackTrace();
         }
-        if (sb.toString().contains("id")) {
+        if (sb.toString().contains("name")) {
             return sb.toString();
         } else {
             return "{\"success\": true,\"message\": \"Данные обновлены!\"}";
         }
     }
 
-    public String addUserToDB(String data) {
+    public String addSkillToDB(String data) {
         try {
             dfs.dataInitilization(data);
-            PreparedStatement preparedStatement = connection.prepareStatement("select email from users");
+            PreparedStatement preparedStatement = connection.prepareStatement("select name from skills");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                String emailFromDB = resultSet.getString("email");
-                if (dfs.getEmail().equals(emailFromDB)) {
-                    return "{\"success\": false,\"message\": \"Пользователь с данной почтой уже зарегестрирован!\"}";
+                String skillFromDB = resultSet.getString("name");
+                if (dfs.getName().equals(skillFromDB)) {
+                    return "{\"success\": false,\"message\": \"Данный навык уже зарегестрирован!\"}";
                 }
             }
-            preparedStatement = connection.prepareStatement("insert into users (name, email) VALUES (?,?)");
+            preparedStatement = connection.prepareStatement("insert into skills (name) VALUES (?)");
             preparedStatement.setString(1, dfs.getName());
-            preparedStatement.setString(2, dfs.getEmail());
             preparedStatement.executeUpdate();
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return "{\"success\": true,\"message\": \"Пользователь добавлен!\"}";
+        return "{\"success\": true,\"message\": \"Навык добавлен!\"}";
     }
 
-    public String deleteUserFromDB(String data) {
+    public String deleteSkillFromDB(String data) {
         try {
             dfs.dataInitilization(data);
-            PreparedStatement preparedStatement = connection.prepareStatement("delete from users * where id = ?");
+            PreparedStatement preparedStatement = connection.prepareStatement("delete from skills * where id = ?");
             preparedStatement.setInt(1, dfs.getId());
             preparedStatement.executeUpdate();
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return "{\"success\": true,\"message\": \"Пользователь удален!\"}";
+        return "{\"success\": true,\"message\": \"Навык удален!\"}";
     }
 }

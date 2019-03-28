@@ -8,7 +8,7 @@ import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
-//@SuppressWarnings("all")
+@SuppressWarnings("all")
 public class TechnologiesAction {
     private String login = "postgres";
     private String password = "1234";
@@ -32,7 +32,7 @@ public class TechnologiesAction {
         }
     }
 
-    public String technologiesUpdate(String data) throws JsonProcessingException, NullPointerException {
+    public String technologiesUpdate(String data) throws NullPointerException {
         try {
             dfs.dataInitilization(data);
             PreparedStatement preparedStatement = connection.prepareStatement("select * from technologies");
@@ -47,7 +47,7 @@ public class TechnologiesAction {
             sb.setLength(sb.length() - 1);
             sb.append("], \"success\": true,\"message\": \"Данные обновлены!\" }");
             connection.close();
-        } catch (SQLException e) {
+        } catch (SQLException | JsonProcessingException e) {
             e.printStackTrace();
         }
         if (sb.toString().contains("name")) {
@@ -64,12 +64,12 @@ public class TechnologiesAction {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 String technologyFromDB = resultSet.getString("name");
-                if (dfs.getTechnology().equals(technologyFromDB)) {
+                if (dfs.getName().equals(technologyFromDB)) {
                     return "{\"success\": false,\"message\": \"Данная технология уже зарегестрирована!\"}";
                 }
             }
             preparedStatement = connection.prepareStatement("insert into technologies (name) VALUES (?)");
-            preparedStatement.setString(1, dfs.getTechnology());
+            preparedStatement.setString(1, dfs.getName());
             preparedStatement.executeUpdate();
             connection.close();
         } catch (SQLException e) {
@@ -81,7 +81,7 @@ public class TechnologiesAction {
     public String deleteTechnologyFromDB(String data) {
         try {
             dfs.dataInitilization(data);
-            PreparedStatement preparedStatement = connection.prepareStatement("delete from users * where id = ?");
+            PreparedStatement preparedStatement = connection.prepareStatement("delete from technologies * where id = ?");
             preparedStatement.setInt(1, dfs.getId());
             preparedStatement.executeUpdate();
             connection.close();

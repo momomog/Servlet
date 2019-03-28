@@ -1,4 +1,4 @@
-package UsersDB;
+package PersonalDB;
 
 import JsonParser.DataForServlet;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @SuppressWarnings("all")
-public class UsersAction {
+public class PersonalAction {
     private String login = "postgres";
     private String password = "1234";
     private String url = "jdbc:postgresql://localhost:5432/data";
@@ -32,16 +32,19 @@ public class UsersAction {
         }
     }
 
-    public String usersUpdate(String data) throws NullPointerException {
+    public String personalsUpdate(String data) throws NullPointerException {
         try {
             dfs.dataInitilization(data);
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from users");
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from personals");
             ResultSet resultSet = preparedStatement.executeQuery();
-            sb.append("{\"users\":[");
+            sb.append("{\"personals\":[");
             while (resultSet.next()) {
                 map.put("id", String.valueOf(resultSet.getInt("id")));
                 map.put("name", resultSet.getString("name"));
-                map.put("email", resultSet.getString("email"));
+                map.put("technology", resultSet.getString("technology"));
+                map.put("skill", resultSet.getString("skill"));
+                map.put("used", resultSet.getString("used"));
+                map.put("commentary", resultSet.getString("commentary"));
                 sb.append(mapper.writeValueAsString(map)).append(",");
                 map.clear();
             }
@@ -58,20 +61,24 @@ public class UsersAction {
         }
     }
 
-    public String addUserToDB(String data) {
+    public String addPersonalToDB(String data) {
         try {
             dfs.dataInitilization(data);
-            PreparedStatement preparedStatement = connection.prepareStatement("select email from users");
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from personals");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                String emailFromDB = resultSet.getString("email");
-                if (dfs.getEmail().equals(emailFromDB)) {
-                    return "{\"success\": false,\"message\": \"Пользователь с данной почтой уже зарегестрирован!\"}";
+                String nameFromDB = resultSet.getString("name");
+                String techFromDB = resultSet.getString("technology");
+                if (dfs.getName().equals(nameFromDB) && dfs.getTechnology().equals(techFromDB)) {
+                    return "{\"success\": false,\"message\": \"Данная технология для пользователя уже зарегестрирована!\"}";
                 }
             }
-            preparedStatement = connection.prepareStatement("insert into users (name, email) VALUES (?,?)");
+            preparedStatement = connection.prepareStatement("insert into personals (name, technology, skill, used, commentary) VALUES (?,?,?,?,?)");
             preparedStatement.setString(1, dfs.getName());
-            preparedStatement.setString(2, dfs.getEmail());
+            preparedStatement.setString(2, dfs.getTechnology());
+            preparedStatement.setString(3, dfs.getSkill());
+            preparedStatement.setString(4, dfs.getUsed());
+            preparedStatement.setString(5, dfs.getCommentary());
             preparedStatement.executeUpdate();
             connection.close();
         } catch (SQLException e) {
@@ -80,10 +87,10 @@ public class UsersAction {
         return "{\"success\": true,\"message\": \"Пользователь добавлен!\"}";
     }
 
-    public String deleteUserFromDB(String data) {
+    public String deletePersonalFromDB(String data) {
         try {
             dfs.dataInitilization(data);
-            PreparedStatement preparedStatement = connection.prepareStatement("delete from users * where id = ?");
+            PreparedStatement preparedStatement = connection.prepareStatement("delete from personals * where id = ?");
             preparedStatement.setInt(1, dfs.getId());
             preparedStatement.executeUpdate();
             connection.close();
