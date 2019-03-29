@@ -1,6 +1,8 @@
 
 import JsonParser.OperationDefiner;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -10,13 +12,9 @@ public class FirstServlet extends javax.servlet.http.HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         String data = request.getParameter("data");
+        System.out.println(data);
 
         PrintWriter out = response.getWriter();
-        response.setContentType("text/html");
-        response.setHeader("Cache-control", "no-cache, no-store");
-        response.setHeader("Pragma", "no-cache");
-        response.setHeader("Access-Control-Allow-Origin", "*");
-
         out.println(new OperationDefiner().takeCurrentOperation(data));
         out.close();
     }

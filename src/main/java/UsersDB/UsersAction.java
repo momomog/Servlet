@@ -86,6 +86,10 @@ public class UsersAction {
             PreparedStatement preparedStatement = connection.prepareStatement("delete from users * where id = ?");
             preparedStatement.setInt(1, dfs.getId());
             preparedStatement.executeUpdate();
+
+            preparedStatement = connection.prepareStatement("delete from personals * where name = ?");
+            preparedStatement.setString(1, dfs.getName());
+            preparedStatement.executeUpdate();
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
