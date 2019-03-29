@@ -15,58 +15,63 @@ public class OperationDefiner {
 
         switch (dataForServlet.getDataBase()) {
             case "users": {
-                if (dataForServlet.getOperation().equals("usersUpdate")) {
-                    return new UsersAction().usersUpdate(data);
-                } else if (dataForServlet.getOperation().equals("addNewUser")) {
-                    return new UsersAction().addUserToDB(data);
-                } else if (dataForServlet.getOperation().equals("deleteUser")) {
-                    return new UsersAction().deleteUserFromDB(data);
-                } else {
-                    return new UsersAction().updateUserdataToDB(data);
+                switch (dataForServlet.getOperation()) {
+                    case "usersUpdate":
+                        return new UsersAction().usersUpdate(data);
+                    case "addNewUser":
+                        return new UsersAction().addUserToDB(data);
+                    case "deleteUser":
+                        return new UsersAction().deleteUserFromDB(data);
+                    default:
+                        return new UsersAction().updateUserdataToDB(data);
                 }
             }
             case "technologies": {
-                if (dataForServlet.getOperation().equals("technologiesUpdate")) {
-                    return new TechnologiesAction().technologiesUpdate(data);
-                } else if (dataForServlet.getOperation().equals("addTechnologyToDB")) {
-                    return new TechnologiesAction().addTechnologyToDB(data);
-                } else if (dataForServlet.getOperation().equals("deleteTechnologyFromDB")) {
-                    return new TechnologiesAction().deleteTechnologyFromDB(data);
-                } else {
-                    return new TechnologiesAction().updateTechnologydataToDB(data);
+                switch (dataForServlet.getOperation()) {
+                    case "technologiesUpdate":
+                        return new TechnologiesAction().technologiesUpdate(data);
+                    case "addTechnologyToDB":
+                        return new TechnologiesAction().addTechnologyToDB(data);
+                    case "deleteTechnologyFromDB":
+                        return new TechnologiesAction().deleteTechnologyFromDB(data);
+                    default:
+                        return new TechnologiesAction().updateTechnologydataToDB(data);
                 }
             }
             case "skills": {
-                if (dataForServlet.getOperation().equals("skillsUpdate")) {
-                    return new SkillsAction().skillsUpdate(data);
-                } else if (dataForServlet.getOperation().equals("addSkillToDB")) {
-                    return new SkillsAction().addSkillToDB(data);
-                } else if (dataForServlet.getOperation().equals("deleteSkillFromDB")) {
-                    return new SkillsAction().deleteSkillFromDB(data);
-                } else {
-                    return new SkillsAction().updateSkilldataToDB(data);
+                switch (dataForServlet.getOperation()) {
+                    case "skillsUpdate":
+                        return new SkillsAction().skillsUpdate(data);
+                    case "addSkillToDB":
+                        return new SkillsAction().addSkillToDB(data);
+                    case "deleteSkillFromDB":
+                        return new SkillsAction().deleteSkillFromDB(data);
+                    default:
+                        return new SkillsAction().updateSkilldataToDB(data);
                 }
             }
             case "useds": {
-                if (dataForServlet.getOperation().equals("usedsUpdate")) {
-                    return new UsedActions().usedsUpdate(data);
-                } else if (dataForServlet.getOperation().equals("addUsedToDB")) {
-                    return new UsedActions().addUsedToDB(data);
-                } else if (dataForServlet.getOperation().equals("deleteUsedFromDB")) {
-                    return new UsedActions().deleteUsedFromDB(data);
-                } else {
-                    return new UsedActions().updateUseddataToDB(data);
+                switch (dataForServlet.getOperation()) {
+                    case "usedsUpdate":
+                        return new UsedActions().usedsUpdate(data);
+                    case "addUsedToDB":
+                        return new UsedActions().addUsedToDB(data);
+                    case "deleteUsedFromDB":
+                        return new UsedActions().deleteUsedFromDB(data);
+                    default:
+                        return new UsedActions().updateUseddataToDB(data);
                 }
             }
             case "personals": {
-                if (dataForServlet.getOperation().equals("personalsUpdate")) {
-                    return new PersonalAction().personalsUpdate(data);
-                } else if (dataForServlet.getOperation().equals("addPersonalToDB")) {
-                    return new PersonalAction().addPersonalToDB(data);
-                } else if (dataForServlet.getOperation().equals("deletePersonal")) {
-                    return new PersonalAction().deletePersonalFromDB(data);
-                } else {
-                    return new PersonalAction().updatePersonaldataToDB(data);
+                switch (dataForServlet.getOperation()) {
+                    case "personalsUpdate":
+                        return new PersonalAction().personalsUpdate(data);
+                    case "addPersonalToDB":
+                        return new PersonalAction().addPersonalToDB(data);
+                    case "deletePersonal":
+                        return new PersonalAction().deletePersonalFromDB(data);
+                    default:
+                        return new PersonalAction().updatePersonaldataToDB(data);
                 }
             }
         }

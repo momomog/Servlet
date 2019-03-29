@@ -35,7 +35,7 @@ public class TechnologiesAction {
     public String technologiesUpdate(String data) throws NullPointerException {
         try {
             dfs.dataInitilization(data);
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from technologies");
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from technologies ORDER BY id");
             ResultSet resultSet = preparedStatement.executeQuery();
             sb.append("{\"technologies\":[");
             while (resultSet.next()) {
@@ -96,7 +96,7 @@ public class TechnologiesAction {
             dfs.dataInitilization(data);
             PreparedStatement preparedStatement = connection.prepareStatement("update technologies set name = ? where id = ?");
             preparedStatement.setString(1, dfs.getName());
-            preparedStatement.setInt(1, dfs.getId());
+            preparedStatement.setInt(2, dfs.getId());
             preparedStatement.executeUpdate();
             connection.close();
         } catch (SQLException e) {

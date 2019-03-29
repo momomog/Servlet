@@ -35,7 +35,7 @@ public class SkillsAction {
     public String skillsUpdate(String data) throws NullPointerException {
         try {
             dfs.dataInitilization(data);
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from skills");
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from skills ORDER BY id");
             ResultSet resultSet = preparedStatement.executeQuery();
             sb.append("{\"skills\":[");
             while (resultSet.next()) {
@@ -96,7 +96,7 @@ public class SkillsAction {
             dfs.dataInitilization(data);
             PreparedStatement preparedStatement = connection.prepareStatement("update skills set name = ? where id = ?");
             preparedStatement.setString(1, dfs.getName());
-            preparedStatement.setInt(1, dfs.getId());
+            preparedStatement.setInt(2, dfs.getId());
             preparedStatement.executeUpdate();
             connection.close();
         } catch (SQLException e) {
