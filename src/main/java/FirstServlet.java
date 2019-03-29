@@ -15,6 +15,7 @@ public class FirstServlet extends javax.servlet.http.HttpServlet {
         response.setContentType("text/html");
         response.setHeader("Cache-control", "no-cache, no-store");
         response.setHeader("Pragma", "no-cache");
+        response.setHeader("Access-Control-Allow-Origin", "*");
 
         out.println(new OperationDefiner().takeCurrentOperation(data));
         out.close();
