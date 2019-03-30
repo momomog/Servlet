@@ -86,7 +86,7 @@ public class SkillsAction {
             preparedStatement.executeUpdate();
             connection.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            return "{\"success\": false,\"message\": \"Вы не можете удалить данный навык, так как он используется в таблице знаний сотрудников!\"}";
         }
         return "{\"success\": true,\"message\": \"Навык удален!\"}";
     }

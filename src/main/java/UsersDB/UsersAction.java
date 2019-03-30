@@ -83,13 +83,15 @@ public class UsersAction {
     public String deleteUserFromDB(String data) {
         try {
             dfs.dataInitilization(data);
-            PreparedStatement preparedStatement = connection.prepareStatement("delete from users * where id = ?");
+            PreparedStatement preparedStatement = connection.prepareStatement("delete from personal * where name = ?");
             preparedStatement.setInt(1, dfs.getId());
             preparedStatement.executeUpdate();
 
-            preparedStatement = connection.prepareStatement("delete from personals * where name = ?");
-            preparedStatement.setString(1, dfs.getName());
+            preparedStatement = connection.prepareStatement("delete from users * where id = ?");
+            preparedStatement.setInt(1, dfs.getId());
             preparedStatement.executeUpdate();
+
+
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();

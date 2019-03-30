@@ -86,7 +86,7 @@ public class TechnologiesAction {
             preparedStatement.executeUpdate();
             connection.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            return "{\"success\": false,\"message\": \"Вы не можете удалить данную технологию, так как она используется в таблице знаний сотрудников!\"}";
         }
         return "{\"success\": true,\"message\": \"Технология удалена!\"}";
     }

@@ -175,9 +175,9 @@ public class PersonalAction {
         try {
             dfs.dataInitilization(data);
             PreparedStatement preparedStatement = connection.prepareStatement("update personal set technology = ?, skill = ?, used = ?, commentary = ? where id = ?");
-            preparedStatement.setString(1, dfs.getTechnology());
-            preparedStatement.setString(2, dfs.getSkill());
-            preparedStatement.setString(3, dfs.getUsed());
+            preparedStatement.setInt(1, Integer.parseInt(dfs.getTechnology()));
+            preparedStatement.setInt(2, Integer.parseInt(dfs.getSkill()));
+            preparedStatement.setInt(3, Integer.parseInt(dfs.getUsed()));
             preparedStatement.setString(4, dfs.getCommentary());
             preparedStatement.setInt(5, dfs.getId());
             preparedStatement.executeUpdate();
