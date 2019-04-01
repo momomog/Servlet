@@ -10,7 +10,6 @@ public class FirstServlet extends javax.servlet.http.HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         String data = request.getParameter("data");
-        System.out.println(data);
 
         PrintWriter out = response.getWriter();
         out.println(new OperationDefiner().takeCurrentOperation(data));

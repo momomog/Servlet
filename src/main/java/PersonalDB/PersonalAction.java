@@ -132,32 +132,6 @@ public class PersonalAction {
         return "{\"success\": true,\"message\": \"Пользователь добавлен!\"}";
     }
 
-//    public String addPersonalToDB(String data) {
-//        try {
-//            dfs.dataInitilization(data);
-//            PreparedStatement preparedStatement = connection.prepareStatement("select * from personals");
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//            while (resultSet.next()) {
-//                String nameFromDB = resultSet.getString("name");
-//                String techFromDB = resultSet.getString("technology");
-//                if (dfs.getName().equals(nameFromDB) && dfs.getTechnology().equals(techFromDB)) {
-//                    return "{\"success\": false,\"message\": \"Данная технология для пользователя уже зарегестрирована!\"}";
-//                }
-//            }
-//            preparedStatement = connection.prepareStatement("insert into personals (name, technology, skill, used, commentary) VALUES (?,?,?,?,?)");
-//            preparedStatement.setString(1, dfs.getName());
-//            preparedStatement.setString(2, dfs.getTechnology());
-//            preparedStatement.setString(3, dfs.getSkill());
-//            preparedStatement.setString(4, dfs.getUsed());
-//            preparedStatement.setString(5, dfs.getCommentary());
-//            preparedStatement.executeUpdate();
-//            connection.close();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return "{\"success\": true,\"message\": \"Пользователь добавлен!\"}";
-//    }
-
     public String deletePersonalFromDB(String data) {
         try {
             dfs.dataInitilization(data);
