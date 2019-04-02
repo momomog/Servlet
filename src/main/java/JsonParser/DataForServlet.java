@@ -12,6 +12,7 @@ public class DataForServlet {
     private String id;
     private String name;
     private String email;
+    private String phone;
     private String technology;
     private String skill;
     private String used;
@@ -46,6 +47,10 @@ public class DataForServlet {
 
     public String getEmail() {
         return dfs.email;
+    }
+
+    public String getPhone() {
+        return dfs.phone;
     }
 
     public String getTechnology() {

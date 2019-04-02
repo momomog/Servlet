@@ -42,6 +42,7 @@ public class UsersAction {
                 map.put("id", String.valueOf(resultSet.getInt("id")));
                 map.put("name", resultSet.getString("name"));
                 map.put("email", resultSet.getString("email"));
+                map.put("phone", resultSet.getString("phone"));
                 sb.append(mapper.writeValueAsString(map)).append(",");
                 map.clear();
             }
@@ -69,9 +70,20 @@ public class UsersAction {
                     return "{\"success\": false,\"message\": \"Пользователь с данной почтой уже зарегестрирован!\"}";
                 }
             }
-            preparedStatement = connection.prepareStatement("insert into users (name, email) VALUES (?,?)");
+
+            preparedStatement = connection.prepareStatement("select phone from users");
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String phoneFromDB = resultSet.getString("phone");
+                if (dfs.getPhone().equals(phoneFromDB)) {
+                    return "{\"success\": false,\"message\": \"Пользователь с данным телефоном уже зарегестрирован!\"}";
+                }
+            }
+
+            preparedStatement = connection.prepareStatement("insert into users (name, email, phone) VALUES (?, ?, ?)");
             preparedStatement.setString(1, dfs.getName());
             preparedStatement.setString(2, dfs.getEmail());
+            preparedStatement.setString(3, dfs.getPhone());
             preparedStatement.executeUpdate();
             connection.close();
         } catch (SQLException e) {
@@ -102,10 +114,11 @@ public class UsersAction {
     public String updateUserdataToDB(String data) {
         try {
             dfs.dataInitilization(data);
-            PreparedStatement preparedStatement = connection.prepareStatement("update users set name = ?, email = ? where id = ?");
+            PreparedStatement preparedStatement = connection.prepareStatement("update users set name = ?, email = ?, phone = ? where id = ?");
             preparedStatement.setString(1, dfs.getName());
             preparedStatement.setString(2, dfs.getEmail());
-            preparedStatement.setInt(3, dfs.getId());
+            preparedStatement.setString(3, dfs.getPhone());
+            preparedStatement.setInt(4, dfs.getId());
             preparedStatement.executeUpdate();
             connection.close();
         } catch (SQLException e) {
